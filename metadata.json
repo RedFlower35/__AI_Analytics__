@@ -1,0 +1,6 @@
+{
+  "name": "AI 數據分析與洞察工具",
+  "description": "一鍵貼上 CSV 資料，利用 Google Gemini 智慧模型進行資料清洗、核心趨勢分析與視覺化洞察建議的專業工具。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

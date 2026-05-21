@@ -255,15 +255,10 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-2">
-            <a
-              href="https://ai.studio/build"
-              target="_blank"
-              rel="referrer"
-              className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-slate-500 hover:text-slate-800 px-3 py-1.5 bg-slate-100 hover:bg-slate-200/85 rounded-xl transition"
-            >
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-slate-500 px-3 py-1.5 bg-slate-100 rounded-xl">
               <Info size={12} />
-              <span>什麼是 AI Studio 應用</span>
-            </a>
+              <span>本機獨立運行版本</span>
+            </div>
           </div>
         </div>
       </header>

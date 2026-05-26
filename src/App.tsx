@@ -500,10 +500,10 @@ export default function App() {
                         )}
                       </div>
                       <div className="text-[10px] text-slate-500 mt-0.5">
-                        模型：nvidia/nemotron-mini-4b-instruct
+                        模型：minimax/minimax-m2.7
                       </div>
                       <div className="text-[10px] text-slate-400 mt-2 font-medium leading-relaxed">
-                        高效邊緣與雲端推理，邏輯條理分明、指令遵從度高。
+                        強大的中文語境與長文本理解，邏輯分析流暢度極高。
                       </div>
                     </div>
                   </button>
@@ -525,8 +525,8 @@ export default function App() {
                   }`}>
                     <strong>載入提示</strong>：{
                       aiProvider === "gemini"
-                        ? "我們使用對數據敏銳度極高且推理迅速的 Gemini 2.5 Flash Lite 模型，它對於多維度的 csv 樞紐統計和趨勢關聯具有頂尖的泛化理解與決策推導能力。"
-                        : "我們使用高效推理的 NVIDIA Nemotron Mini 4B Instruct 模型，其邏輯條理分明、指令遵從度高，能為您的數據提供最精準的診斷。"
+                        ? "我們使用對數據敏銳度極高且推理迅速的 Gemini 2.5 Flash Lite 模型，它對於多維度的 csv 樞紐統計 pillars 和趨勢關聯具有頂尖的泛化理解與決策推導能力。"
+                        : "我們使用極致流暢的 Minimax M2.7 模型，其具備出色的中文語境與結構化數據理解能力，能為您的數據提供最精準的診斷。"
                     }
                   </p>
                 </div>

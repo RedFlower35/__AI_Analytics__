@@ -8,7 +8,7 @@
 *   **後端**: Node.js, Vercel Serverless Functions, TypeScript
 *   **AI 核心**:
     - **Google Gemini**（模型：`gemini-2.5-flash-lite`，使用 `@google/genai` SDK）
-    - **NVIDIA NIM**（模型：`nvidia/nemotron-mini-4b-instruct`）
+    - **NVIDIA NIM**（模型：`minimax/minimax-m2.7`）
 
 ## 🚀 本機開發與執行
 

@@ -86,7 +86,7 @@ ${customInstructions ? `額外分析需求與指示：\n${customInstructions}` :
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "nvidia/nemotron-mini-4b-instruct",
+          model: "minimax/minimax-m2.7",
           messages: [
             { role: "system", content: systemInstruction },
             { role: "user", content: userPrompt }

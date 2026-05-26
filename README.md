@@ -4,9 +4,11 @@
 
 ## 🛠️ 技術堆疊
 
-*   **前端**: React 19, Vite 6, Tailwind CSS v4, Motion (Framer Motion), Lucide Icons
-*   **後端**: Node.js, Express, TypeScript, tsx, esbuild
-*   **AI 核心**: Google Gen AI SDK (@google/genai), Gemini 3.5 Flash
+*   **前端**: React 19, Vite 6, Tailwind CSS v4, Motion (Framer Motion), Lucide Icons, React Markdown
+*   **後端**: Node.js, Vercel Serverless Functions, TypeScript
+*   **AI 核心**:
+    - **Google Gemini**（模型：`gemini-2.5-flash-lite`，使用 `@google/genai` SDK）
+    - **NVIDIA NIM**（模型：`nvidia/nemotron-mini-4b-instruct`）
 
 ## 🚀 本機開發與執行
 
@@ -18,25 +20,25 @@
    ```
 
 2. **配置環境變數**：
-   在專案根目錄下建立一個名為 `.env` 的檔案，並填入您的 Gemini API 金鑰（可至 [Google AI Studio](https://aistudio.google.com/) 免費申請）：
+   在專案根目錄下建立一個名為 `.env.local` 的檔案，並填入您的 API 金鑰：
    ```env
    GEMINI_API_KEY="您的_Gemini_API_Key"
+   NVIDIA_API_KEY="您的_NVIDIA_API_Key"
    ```
 
 3. **啟動開發伺服器**：
+   由於使用 Vercel Serverless Functions，建議安裝 Vercel CLI 並透過其在本機模擬執行：
    ```bash
-   npm run dev
+   npm install -g vercel
+   vercel dev
    ```
    啟動後，請在瀏覽器打開 http://localhost:3000。
 
 ## 📦 生產環境打包與部署
 
-1. **編譯打包前端與後端伺服器**：
-   ```bash
-   npm run build
-   ```
+本專案已完全適配 **Vercel** 部署：
 
-2. **啟動生產環境服務**：
-   ```bash
-   npm run start
-   ```
+1. **導入 GitHub 儲存庫**：在 Vercel 後台點擊 "Add New Project" 並導入本專案。
+2. **設定環境變數**：在 Vercel 專案設定的 Environment Variables 中配置 `GEMINI_API_KEY` 與 `NVIDIA_API_KEY`。
+3. **完成部署**：Vercel 會自動辨識 `/api/generate.ts` 為 Serverless Function，並編譯部署 React 前端。
+

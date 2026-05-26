@@ -51,7 +51,7 @@ export default function AnalysisResultView({ result, csvFileName }: AnalysisResu
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-slate-800 text-sm">AI 數據多維度診斷報告</h3>
               <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full select-none">
-                Gemini 3.5 智慧賦能
+                先進 AI 智慧賦能
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">

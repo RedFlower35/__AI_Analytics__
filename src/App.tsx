@@ -42,6 +42,7 @@ export default function App() {
   // UI Control States
   const [dragActive, setDragActive] = useState(false);
   const [activeAnalysisProfile, setActiveAnalysisProfile] = useState("general");
+  const [aiProvider, setAiProvider] = useState<"gemini" | "nvidia">("gemini");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Automatically parse pasted or CSV data
@@ -190,7 +191,7 @@ export default function App() {
     setAnalysisResult(""); // Reset previous for a clean layout transition
 
     try {
-      const response = await fetch("/api/analyze", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -198,6 +199,7 @@ export default function App() {
         body: JSON.stringify({
           csvData: csvData,
           customInstructions: customInstructions,
+          provider: aiProvider,
         }),
       });
 
@@ -272,7 +274,7 @@ export default function App() {
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-1.5 leading-relaxed max-w-3xl">
             貼上您的 CSV 格式銷售量、產品轉化流量或任何維度日誌。
-            Gemini 3.5 智慧模型將協助您自動完成指標彙整、異常排查、維度趨勢與下一決策步驟建議。
+            多款先進的 AI 智慧模型將協助您自動完成指標彙整、異常排查、維度趨勢與下一決策步驟建議。
           </p>
         </div>
 
@@ -436,21 +438,107 @@ export default function App() {
                 </div>
               </div>
 
+              {/* AI Provider & Model Select Widget */}
+              <div className="mt-6 pt-6 border-t border-slate-100">
+                <div className="flex items-center gap-2 mb-3.5">
+                  <BrainCircuit className="text-slate-500" size={15} />
+                  <span className="text-xs font-bold text-slate-800">
+                    選擇 AI 服務提供商與模型
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
+                  <button
+                    type="button"
+                    onClick={() => setAiProvider("gemini")}
+                    className={`p-4 border rounded-2xl text-left transition-all relative overflow-hidden flex items-start gap-3.5 group cursor-pointer ${
+                      aiProvider === "gemini"
+                        ? "border-indigo-600 bg-indigo-50/15 shadow-sm shadow-indigo-650/5 ring-1 ring-indigo-600"
+                        : "border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/50"
+                    }`}
+                  >
+                    <div className={`p-2.5 rounded-xl shrink-0 transition-colors ${
+                      aiProvider === "gemini" ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+                    }`}>
+                      <Sparkles size={16} />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        Google Gemini
+                        {aiProvider === "gemini" && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-600" />
+                        )}
+                      </div>
+                      <div className="text-[10px] text-slate-500 mt-0.5">
+                        模型：gemini-2.5-flash-lite
+                      </div>
+                      <div className="text-[10px] text-slate-400 mt-2 font-medium leading-relaxed">
+                        速度極快、對資料摘要及關鍵欄位解析能力頂尖。
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setAiProvider("nvidia")}
+                    className={`p-4 border rounded-2xl text-left transition-all relative overflow-hidden flex items-start gap-3.5 group cursor-pointer ${
+                      aiProvider === "nvidia"
+                        ? "border-emerald-600 bg-emerald-50/15 shadow-sm shadow-emerald-650/5 ring-1 ring-emerald-650"
+                        : "border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/50"
+                    }`}
+                  >
+                    <div className={`p-2.5 rounded-xl shrink-0 transition-colors ${
+                      aiProvider === "nvidia" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+                    }`}>
+                      <BrainCircuit size={16} />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        NVIDIA NIM
+                        {aiProvider === "nvidia" && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                        )}
+                      </div>
+                      <div className="text-[10px] text-slate-500 mt-0.5">
+                        模型：nvidia/nemotron-mini-4b-instruct
+                      </div>
+                      <div className="text-[10px] text-slate-400 mt-2 font-medium leading-relaxed">
+                        高效邊緣與雲端推理，邏輯條理分明、指令遵從度高。
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
               {/* Start analytic interactive panel */}
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-indigo-50/30 p-4 rounded-2xl border border-indigo-100/40">
+              <div className={`mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl border transition-colors duration-300 ${
+                aiProvider === "gemini"
+                  ? "bg-indigo-50/30 border-indigo-100/40"
+                  : "bg-emerald-50/20 border-emerald-100/30"
+              }`}>
                 <div className="flex items-start gap-2.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-650 mt-1.5 shrink-0 animate-ping" />
-                  <p className="text-[11px] text-indigo-900 leading-relaxed">
-                    <strong>載入提示</strong>：我們使用對數據敏銳度極高且推理迅速的{" "}
-                    <strong>Gemini 3.5 Flash</strong>{" "}
-                    模型，它對於多維度的 csv 樞紐統計和趨勢關聯具有頂尖的泛化理解與決策推導能力。
+                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 animate-ping ${
+                    aiProvider === "gemini" ? "bg-indigo-600" : "bg-emerald-600"
+                  }`} />
+                  <p className={`text-[11px] leading-relaxed transition-colors duration-300 ${
+                    aiProvider === "gemini" ? "text-indigo-900" : "text-emerald-900"
+                  }`}>
+                    <strong>載入提示</strong>：{
+                      aiProvider === "gemini"
+                        ? "我們使用對數據敏銳度極高且推理迅速的 Gemini 2.5 Flash Lite 模型，它對於多維度的 csv 樞紐統計和趨勢關聯具有頂尖的泛化理解與決策推導能力。"
+                        : "我們使用高效推理的 NVIDIA Nemotron Mini 4B Instruct 模型，其邏輯條理分明、指令遵從度高，能為您的數據提供最精準的診斷。"
+                    }
                   </p>
                 </div>
 
                 <button
                   onClick={handleAnalyze}
                   disabled={isAnalyzing || !csvData.trim()}
-                  className="w-full sm:w-auto shrink-0 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs px-6 py-3.5 rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-md shadow-indigo-600/10 cursor-pointer disabled:cursor-not-allowed select-none"
+                  className={`w-full sm:w-auto shrink-0 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs px-6 py-3.5 rounded-xl transition duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed select-none ${
+                    aiProvider === "gemini"
+                      ? "bg-indigo-600 hover:bg-indigo-700 shadow-md shadow-indigo-600/10"
+                      : "bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-600/10"
+                  }`}
                 >
                   {isAnalyzing ? (
                     <>
